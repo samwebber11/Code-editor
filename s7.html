@@ -1,0 +1,130 @@
+<html>
+<head>
+<title>
+CodePlayer
+</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+</script>
+<link href="jquery/jquery-ui.css" rel="stylesheet">
+<script src="jquery/jquery-ui.min.js"></script>
+<style type="text/css">
+#div1{
+background-color:#E4EAE2;
+padding:5px;
+height:40px;
+width:100%
+}
+#div2 {
+font-weight:bold;
+font-family:sans-serif;
+padding:10px;
+float:left;
+font-size:25px;
+margin-right:450px;
+}
+.div4{
+font-size:100%;
+font-family:sans-serif;
+float:left;
+border:1px solid black;
+border-right:none;
+padding:5px;
+}
+#div3{
+width:1000px;
+margin 0 auto;
+padding-top:10px;
+}
+body{
+padding:0px;
+margin:0px;
+}
+#html{
+border-top-left-radius:4px;
+border-bottom-left-radius:4px;
+}
+#output
+{
+border-top-right-radius:4px;
+border-bottom-right-radius:4px;
+border-right:1px solid black;
+}
+.active
+{
+background-color:#9FF5BF;
+}
+.highlight
+{
+background-color:grey;
+}
+#div5
+{
+float:left;
+}
+textarea{
+width: 50%;
+resize: none;
+}
+.panel
+{
+width:50%;
+float:left;
+
+}
+#outputPanel
+{
+border:none;
+}
+.hidden{
+display:none;
+}
+#cssPanel
+{
+font-family:bold;
+}
+</style>
+</head>
+<body>
+<div id="div1">
+<div id="div2">
+CodePlayer</div>
+<div id="div3">
+<div class="div4" id="html">HTML</div>
+<div class="div4" id="css">CSS</div>
+<div class="div4" id="js">JAVASCRIPT</div>
+<div class="div4" id="output">OUTPUT</div>
+</div>
+</div>
+<div id="div5">
+<textarea class="panel" id="htmlPanel"><p id="text1">"Hello World</p></textarea>
+<textarea class="panel hidden" id="cssPanel"> p {color:green;} </textarea>
+<textarea class="panel hidden" id="jsPanel">document.getElementById("text1").innerHTML="NO HELLO PLEASE";</textarea>
+<iframe class="panel" id="outputPanel"></iframe>
+</div>
+
+<script type="text/javascript">
+function update()
+{$(".panel").contents().find("html").html("<html><head><style type='text/css'>"
+ + $("#cssPanel").val() + "</style></head><body>" 
+ + $("#htmlPanel").val() + "</body></html>");
+ 
+ document.getElementById("outputPanel").contentWindow.eval($("#jsPanel").val());
+}
+$(".div4").hover(function(){
+$(this).css("background-color","grey");}
+,function(){
+$(this).css("background-color","#E4EAE2")});
+$(".div4").click(function(){
+$(this).toggleClass(".active");
+var pan = $(this).attr("id") + "Panel";
+$("#" + pan ).toggleClass("hidden");
+});
+$("textarea").height($(window).height()-$("#div1").height()-15);
+$(".panel").width(($(window).height()/2)-10);
+update();
+$(this).on('change keyup paste', function() {
+update();   
+});
+</script>
+</body>
+</html>
